@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Expense Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>💰 Smart Expense Tracker</h1>
+
+    <!-- Add Expense Form -->
+    <div class="card">
+        <h2>Add Expense</h2>
+        <form method="POST" action="/add">
+            <input type="number" name="amount" placeholder="Enter Amount" required>
+            <input type="text" name="category" placeholder="Enter Category" required>
+            <input type="date" name="date" required>
+            <button type="submit">Add Expense</button>
+        </form>
+    </div>
+
+    <!-- Total Section -->
+    <div class="card total-card">
+        <h2>Total: ₹ {{ total }}</h2>
+        <p>Total Entries: {{ count }}</p>
+    </div>
+
+    <!-- Expense Table -->
+    <div class="card">
+        <h2>Expense List</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exp in expenses %}
+                <tr>
+                    <td>₹ {{ exp[1] }}</td>
+                    <td>{{ exp[2] }}</td>
+                    <td>{{ exp[3] }}</td>
+                    <td>
+                        <a href="/delete/{{ exp[0] }}" 
+                           onclick="return confirm('Are you sure?')">
+                           ❌
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
